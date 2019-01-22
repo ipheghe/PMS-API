@@ -14,6 +14,13 @@ subLocationRoute.post(
   LocationController.createLocation
 );
 
+// API route for users to get a single location
+subLocationRoute.get(
+  '/api/v1/location/:locationId',
+  isLocationExisiting,
+  LocationController.getLocation
+);
+
 // API route for users to update location
 subLocationRoute.put(
   '/api/v1/location/:locationId',

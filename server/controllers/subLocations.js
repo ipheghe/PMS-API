@@ -18,7 +18,7 @@ export default class LocationController {
    *
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
-   * @return {object} status message
+   * @return {object} status data message
    */
   static createLocation(req, res) {
     const {
@@ -97,11 +97,36 @@ export default class LocationController {
   }
 
   /**
+   * @description Get a single location
+   *
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @return {object} status data message
+   */
+  static getLocation(req, res) {
+    SubLocation.findOne({
+      where: {
+        id: req.params.locationId,
+      },
+      include: [
+        {
+          model: ParentLocation,
+          as: 'parentLocation',
+          attributes: ['name'],
+        },
+      ],
+    })
+    .then(location => handleSuccessMessage(res, 200, location, 'Location retrieved successfully.'))
+    .catch(err => handleErrorMessage(res, 500, err));
+  }
+
+
+  /**
    * @description Update a location
    *
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
-   * @return {object} status message
+   * @return {object} status data message
    */
   static updateLocation(req, res) {
     const {

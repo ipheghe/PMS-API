@@ -47,6 +47,24 @@ describe('<<< Sub Location Controller: ', () => {
     });
   });
 
+  describe('Get A Sub Location: ', () => {
+    it('should return a single sub location', (done) => {
+      server
+        .get('/api/v1/location/102')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.data.name).to.equal('Oluti');
+          expect(res.body.message).to.equal('Location retrieved successfully.');
+          expect(res.body.data.maleResidents).to.equal(10);
+          expect(res.body.data.parentLocation.name).to.equal('Ojo');
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
   describe('Update Sub Location: ', () => {
     it('displays success message after updating a sub location successfully', (done) => {
       server
