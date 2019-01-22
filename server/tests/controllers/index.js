@@ -1,0 +1,1 @@
+require('./parentLocation.spec');
