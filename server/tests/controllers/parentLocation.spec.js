@@ -34,4 +34,34 @@ describe('<<< Parent Location Controller: ', () => {
         });
     });
   });
+
+  describe('Update Parent Location: ', () => {
+    it('displays success message after updating a parent location successfully', (done) => {
+      server
+        .put('/api/v1/parentLocation/102')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .send({ name: 'Eti-osa' })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Parent location details updated successfully.');
+          expect(res.body.data.name).to.equal('Eti-osa');
+          if (err) return done(err);
+          done();
+        });
+      });
+
+      it('displays an error message if user does not input any value to update', (done) => {
+        server
+          .put('/api/v1/parentLocation/102')
+          .set('Content-Type', 'application/json')
+          .type('form')
+          .end((err, res) => {
+            expect(res.status).to.equal(400);
+            expect(res.body.message).to.equal('Please select a field to update');
+            if (err) return done(err);
+            done();
+          });
+      });
+  });
 });

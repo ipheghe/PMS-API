@@ -55,4 +55,36 @@ export default class ParentLocationController {
     })
     .catch((err) => handleErrorMessage(res, 500, err));
   }
+
+  /**
+   * @description  Update a parent location
+   *
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @return {object} status message
+   */
+  static updateParentLocation(req, res) {
+    const { name } = req.body;
+
+    ParentLocation.find({ where: { id: req.params.parentLocationId } })
+      .then((location) => {
+        if (name) {
+          return location.update({
+            name: name ? name.trim() : location.name,
+          })
+          .then((updatedLocation) => handleSuccessMessage(
+            res,
+            200,
+            updatedLocation,
+            'Parent location details updated successfully.'))
+          .catch((error) => {
+            const errorMessage = error.errors.map(value => value.message);
+            handleErrorMessage(res, 400, errorMessage);
+          })
+          .catch(err => handleErrorMessage(res, 500, err));
+        }
+        return handleErrorMessage(res, 400, 'Please select a field to update');
+      })
+      .catch((err) => handleErrorMessage(res, 500, err));
+  }
 }
