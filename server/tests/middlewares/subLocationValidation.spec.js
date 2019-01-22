@@ -114,4 +114,32 @@ describe('<<< SubLocation Validation Middleware: ', () => {
         });
     });
   });
+
+  describe('Exisiting Sub Location Validation: ', () => {
+    it('should return an error message for an invalid locationId', (done) => {
+      server
+        .delete('/api/v1/location/aaa')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please provide a valid ID');
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should return an error message for a non-existent locationId', (done) => {
+      server
+        .delete('/api/v1/location/230')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('location does not exist');
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
 });

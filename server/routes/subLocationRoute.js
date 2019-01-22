@@ -21,4 +21,11 @@ subLocationRoute.put(
   LocationController.updateLocation
 );
 
+// API route for users to delete location
+subLocationRoute.delete(
+  '/api/v1/location/:locationId',
+  isLocationExisiting,
+  LocationController.deleteLocation
+);
+
 export default subLocationRoute;

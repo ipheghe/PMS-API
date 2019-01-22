@@ -76,5 +76,20 @@ describe('<<< Sub Location Controller: ', () => {
           });
       });
   });
+
+  describe('Delete Sub Location: ', () => {
+    it('should return a success message after deleting a sub location', (done) => {
+      server
+        .delete('/api/v1/location/102')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Location deleted successfully.');
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
 });
 

@@ -146,4 +146,17 @@ export default class LocationController {
       })
       .catch(err => handleErrorMessage(res, 500, err));
   }
+
+  /**
+   * @description Delete location
+   *
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @return {object} status message
+   */
+  static deleteLocation(req, res) {
+    SubLocation.destroy({ where: { id: req.params.locationId } })
+    .then(() => handleSuccessMessage(res, 200, null, 'Location deleted successfully.'))
+    .catch(err => handleErrorMessage(res, 500, err));
+  }
 }
