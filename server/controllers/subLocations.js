@@ -21,7 +21,11 @@ export default class LocationController {
    * @return {object} status message
    */
   static createLocation(req, res) {
-    const { name, maleResidents, femaleResidents } = req.body;
+    const {
+      name,
+      maleResidents,
+      femaleResidents,
+    } = req.body;
 
     const createSubLocation = parentLocationId =>
       SubLocation.create({
@@ -88,6 +92,57 @@ export default class LocationController {
             });
           })
           .catch(err => handleErrorMessage(res, 500, err));
+      })
+      .catch(err => handleErrorMessage(res, 500, err));
+  }
+
+  /**
+   * @description Update a location
+   *
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @return {object} status message
+   */
+  static updateLocation(req, res) {
+    const {
+      name,
+      maleResidents,
+      femaleResidents,
+    } = req.body;
+
+    SubLocation.findOne({ where: { id: req.params.locationId } })
+      .then(location => {
+        if (name || maleResidents || femaleResidents) {
+          const updateFemaleResidents = femaleResidents
+            ? parseInt(femaleResidents, 10)
+            : location.femaleResidents;
+          const updatedMaleResidents = maleResidents
+            ? parseInt(maleResidents.trim(), 10)
+            : location.maleResidents;
+          const totalResidents = updateFemaleResidents + updatedMaleResidents;
+
+          return location
+            .update({
+              name: name ? name.trim() : location.name,
+              maleResidents: updatedMaleResidents,
+              femaleResidents: updatedMaleResidents,
+              totalResidents,
+            })
+            .then(updatedLocationDetails =>
+              handleSuccessMessage(
+                res,
+                200,
+                updatedLocationDetails,
+                'Location details updated successfully.'
+              )
+            )
+            .catch(error => {
+              const errorMessage = error.errors.map(value => value.message);
+              handleErrorMessage(res, 400, errorMessage);
+            })
+            .catch(err => handleErrorMessage(res, 500, err));
+        }
+        handleErrorMessage(res, 400, 'Please select a field to update');
       })
       .catch(err => handleErrorMessage(res, 500, err));
   }

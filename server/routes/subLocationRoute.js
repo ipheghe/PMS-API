@@ -2,6 +2,7 @@ import express from 'express';
 import { LocationController } from '../controllers';
 import {
   validateLocationFields,
+  isLocationExisiting,
 } from '../middlewares/subLocationValidation';
 
 const subLocationRoute = express.Router();
@@ -10,7 +11,14 @@ const subLocationRoute = express.Router();
 subLocationRoute.post(
   '/api/v1/location',
   validateLocationFields,
-  LocationController.createLocation,
+  LocationController.createLocation
+);
+
+// API route for users to update location
+subLocationRoute.put(
+  '/api/v1/location/:locationId',
+  isLocationExisiting,
+  LocationController.updateLocation
 );
 
 export default subLocationRoute;

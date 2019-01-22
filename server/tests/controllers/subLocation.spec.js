@@ -46,5 +46,35 @@ describe('<<< Sub Location Controller: ', () => {
         });
     });
   });
+
+  describe('Update Sub Location: ', () => {
+    it('displays success message after updating a sub location successfully', (done) => {
+      server
+        .put('/api/v1/location/102')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .send({ maleResidents: 80 })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Location details updated successfully.');
+          expect(res.body.data.maleResidents).to.equal(80);
+          if (err) return done(err);
+          done();
+        });
+      });
+
+      it('displays an error message if user does not input any value to update', (done) => {
+        server
+          .put('/api/v1/location/102')
+          .set('Content-Type', 'application/json')
+          .type('form')
+          .end((err, res) => {
+            expect(res.status).to.equal(400);
+            expect(res.body.message).to.equal('Please select a field to update');
+            if (err) return done(err);
+            done();
+          });
+      });
+  });
 });
 
