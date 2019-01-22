@@ -47,6 +47,21 @@ describe('<<< Sub Location Controller: ', () => {
     });
   });
 
+  describe('Get All Sub Locations: ', () => {
+    it('should return all sub locations', (done) => {
+      server
+        .get('/api/v1/location')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('All locations retrieved successfully.');
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
   describe('Get A Sub Location: ', () => {
     it('should return a single sub location', (done) => {
       server

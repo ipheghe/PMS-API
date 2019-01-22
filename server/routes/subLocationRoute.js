@@ -14,6 +14,9 @@ subLocationRoute.post(
   LocationController.createLocation
 );
 
+// API route for users to get all locations
+subLocationRoute.get('/api/v1/location', LocationController.getAllLocations);
+
 // API route for users to get a single location
 subLocationRoute.get(
   '/api/v1/location/:locationId',

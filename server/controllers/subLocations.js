@@ -97,6 +97,34 @@ export default class LocationController {
   }
 
   /**
+   * @description Get all locations
+   *
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @return {object} status message
+   */
+  static getAllLocations(req, res) {
+    return SubLocation.findAll({
+      include: [
+        {
+          model: ParentLocation,
+          as: 'parentLocation',
+          attributes: ['name'],
+        },
+      ],
+    })
+      .then(locations =>
+        handleSuccessMessage(
+          res,
+          200,
+          locations,
+          'All locations retrieved successfully.'
+        )
+      )
+      .catch(err => handleErrorMessage(res, 500, err));
+  }
+
+  /**
    * @description Get a single location
    *
    * @param {Object} req - Express request object
@@ -116,10 +144,16 @@ export default class LocationController {
         },
       ],
     })
-    .then(location => handleSuccessMessage(res, 200, location, 'Location retrieved successfully.'))
-    .catch(err => handleErrorMessage(res, 500, err));
+      .then(location =>
+        handleSuccessMessage(
+          res,
+          200,
+          location,
+          'Location retrieved successfully.'
+        )
+      )
+      .catch(err => handleErrorMessage(res, 500, err));
   }
-
 
   /**
    * @description Update a location
@@ -181,7 +215,9 @@ export default class LocationController {
    */
   static deleteLocation(req, res) {
     SubLocation.destroy({ where: { id: req.params.locationId } })
-    .then(() => handleSuccessMessage(res, 200, null, 'Location deleted successfully.'))
-    .catch(err => handleErrorMessage(res, 500, err));
+      .then(() =>
+        handleSuccessMessage(res, 200, null, 'Location deleted successfully.')
+      )
+      .catch(err => handleErrorMessage(res, 500, err));
   }
 }
