@@ -118,13 +118,45 @@ export default class ParentLocationController {
           femaleResidents,
           totalResidents,
         };
-        
+
         return handleSuccessMessage(
           res,
           200,
           updatedLocation,
           'Parent location retrieved successfully.'
         );
+      })
+      .catch(err => handleErrorMessage(res, 500, err));
+  }
+
+  /**
+   * @description Get all parent locations
+   *
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @return {object} status message
+   */
+  static getAllParentLocations(req, res) {
+    return ParentLocation.findAll({
+      include: [
+        {
+          model: SubLocation,
+          as: 'subLocations',
+          attributes: keyAttributes,
+        },
+      ],
+    })
+      .then(locations =>
+        handleSuccessMessage(
+          res,
+          200,
+          locations,
+          'All parent locations retrieved successfully.'
+        )
+      )
+      .catch(error => {
+        const errorMessage = error.errors.map(value => value.message);
+        handleErrorMessage(res, 400, errorMessage);
       })
       .catch(err => handleErrorMessage(res, 500, err));
   }

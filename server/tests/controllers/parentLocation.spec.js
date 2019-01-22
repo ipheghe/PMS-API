@@ -35,6 +35,21 @@ describe('<<< Parent Location Controller: ', () => {
     });
   });
 
+  describe('Get All Parent Locations: ', () => {
+    it('should return all parent locations', (done) => {
+      server
+        .get('/api/v1/parentLocation')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('All parent locations retrieved successfully.');
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
   describe('Get A Parent Location: ', () => {
     it('should return a single parent location', (done) => {
       server

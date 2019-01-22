@@ -21,6 +21,9 @@ parentLocationRoute.get(
   ParentLocationController.getParentLocation
 );
 
+// API route to get all parent locations
+parentLocationRoute.get('/api/v1/parentLocation', ParentLocationController.getAllParentLocations);
+
 // API route to update parent location
 parentLocationRoute.put(
   '/api/v1/parentLocation/:parentLocationId',
