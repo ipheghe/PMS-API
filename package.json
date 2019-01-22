@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon --exec babel-node ./bin/www.js"
+    "start:dev": "nodemon --exec babel-node ./bin/www.js",
+    "test": "sequelize db:migrate:undo:all --env=test&&sequelize db:migrate --env=test  && cross-env NODE_ENV=test nyc mocha --exit server/tests/test.js"
   },
   "repository": {
     "type": "git",
@@ -48,5 +49,23 @@
     "nyc": "^13.1.0",
     "sequelize-cli": "^5.4.0",
     "supertest": "^3.4.1"
+  },
+  "nyc": {
+    "require": [
+      "@babel/register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "include": [
+      "server/**"
+    ],
+    "e": [
+      ".js",
+      ".jsx"
+    ],
+    "sourceMap": false,
+    "instrument": false
   }
 }
