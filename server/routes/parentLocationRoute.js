@@ -14,6 +14,13 @@ parentLocationRoute.post(
   ParentLocationController.createParentLocation
 );
 
+// API route to get a single parent location
+parentLocationRoute.get(
+  '/api/v1/parentLocation/:parentLocationId',
+  isParentLocationExisting,
+  ParentLocationController.getParentLocation
+);
+
 // API route to update parent location
 parentLocationRoute.put(
   '/api/v1/parentLocation/:parentLocationId',

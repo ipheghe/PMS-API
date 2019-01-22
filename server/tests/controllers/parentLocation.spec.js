@@ -35,6 +35,23 @@ describe('<<< Parent Location Controller: ', () => {
     });
   });
 
+  describe('Get A Parent Location: ', () => {
+    it('should return a single parent location', (done) => {
+      server
+        .get('/api/v1/parentLocation/102')
+        .set('Content-Type', 'application/json')
+        .type('form')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.data.name).to.equal('Ikorodu');
+          expect(res.body.message).to.equal('Parent location retrieved successfully.');
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+
   describe('Update Parent Location: ', () => {
     it('displays success message after updating a parent location successfully', (done) => {
       server
