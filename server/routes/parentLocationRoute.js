@@ -21,5 +21,11 @@ parentLocationRoute.put(
   ParentLocationController.updateParentLocation
 );
 
+// API route to delete parent location
+parentLocationRoute.delete(
+  '/api/v1/parentLocation/:parentLocationId',
+  isParentLocationExisting,
+  ParentLocationController.deleteParentLocation
+);
 
 export default parentLocationRoute;
