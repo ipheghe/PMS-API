@@ -1,3 +1,7 @@
 import parentLocationRoute from './parentLocationRoute';
+import subLocationRoute from './subLocationRoute';
 
-export default parentLocationRoute;
+export {
+  parentLocationRoute,
+  subLocationRoute,
+};

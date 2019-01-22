@@ -1,3 +1,7 @@
 import ParentLocationController from './parentLocations';
+import LocationController from './subLocations';
 
-export default ParentLocationController;
+export {
+  ParentLocationController,
+  LocationController,
+};

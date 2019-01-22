@@ -1,5 +1,5 @@
 import express from 'express';
-import ParentLocationController from '../controllers';
+import { ParentLocationController } from '../controllers';
 import {
   validateParentLocationFields,
   isParentLocationExisting,
